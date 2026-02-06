@@ -24,3 +24,6 @@ install (TARGETS
     seek_snapshot
     DESTINATION "bin"
 )
+
+add_executable(seek_snapshot_loop seek_snapshot_loop.cpp)
+target_link_libraries(seek_snapshot_loop seek ${OpenCV_LIBS})
