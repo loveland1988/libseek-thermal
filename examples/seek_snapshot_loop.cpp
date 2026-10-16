@@ -127,12 +127,11 @@ int main(int argc, char** argv)
             // Retrieve one frame and write it
             cam->retrieve(frame_u16);
 
-            Mat frame_g8;
-            frame_u16.convertTo(frame_g8, CV_8UC1, 1.0 / 256.0);
+            // Preserve the original 16-bit thermal pixel values.
+            rotate_mat(frame_u16, rotate);
 
-            rotate_mat(frame_g8, rotate);
-
-            (void)cv::imwrite(outfile, frame_g8);
+            // OpenCV supports writing 16-bit single-channel PNGs.
+            (void)cv::imwrite(outfile, frame_u16);
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(grab_ms));
